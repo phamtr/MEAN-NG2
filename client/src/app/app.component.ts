@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser/src/browser/title';
+
 
 declare var $: any;
 
@@ -12,8 +12,6 @@ export class AppComponent implements OnInit {
 
   title = 'app';
   ngOnInit(){
-    $('button').click(function(){
-      alert('Hi Truong');
-    })
+   
   }
 }
