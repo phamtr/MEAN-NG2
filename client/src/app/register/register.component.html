@@ -1,4 +1,10 @@
 <h2 class="page-header">Register Page</h2>
+
+<div class="row show-hide-message">
+<div [ngClass]="messageClass">
+{{message}}
+</div>
+</div>
 <form [formGroup]="form" (submit)="onRegisterSubmit()">
   <div class="form-group">
     <label class="center-block">Username </label>
@@ -46,7 +52,7 @@
         </ul>
     </div>
   </div>
-  <input type="submit" class="btn btn-primary" value="Submit" />
+  <input [disabled]="!form.valid || processing" type="submit" class="btn btn-primary" value="Submit" />
 </form>
 <p>Username: {{form.controls.username.value}}</p>
 <p>Email: {{form.controls.email.value}}</p>
