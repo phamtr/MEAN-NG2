@@ -58,6 +58,68 @@ module.exports = (router) => {
         
     });
     
+    router.get('/checkEmail/:email', (req, res) =>{
+        if(!req.params.email){
+            res.json({ success: false, message: 'E-mail was not provided'});
+        }else{
+            User.findOne({ email: req.params.email}, (err, user) =>{
+                if(err){
+                    res.json({ success: false, message: err});
+                }else{
+                    if(user){
+                        res.json({ success: false, message: 'E-mail is already taken'});
+                    }else{
+                        res.json({ success: true, message: 'Email is available'});
+                    }
+                       
+                }
+            });
+        }
+    });
+
+    router.get('/checkUsername/:username', (req, res) =>{
+        if(!req.params.username){
+            res.json({ success: false, message: 'Username was not provided'});
+        }else{
+            User.findOne({ username: req.params.username}, (err, user) =>{
+                if(err){
+                    res.json({ success: false, message: err});
+                }else{
+                    if(user){
+                        res.json({ success: false, message: 'Username is already taken'});
+                    }else{
+                        res.json({ success: true, message: 'Username is available'});
+                    }
+                       
+                }
+            });
+        }
+    });
+
+    router.post('/login', (req, res) =>{
+        if(!req.body.username){
+            res.json({ success: false, message: 'No username was provided'});
+        }else{
+            if(!req.body.password){
+                res.json({ success: false, message: 'No password was provided'});
+            }else{
+                User.findOne({ username: req.body.username.toLowerCase()}, (err, user) =>{
+                    if(err){
+                        res.json({ success: false, message:err});
+                    }else{
+                        if(!user){
+                            res.json({ success: false, message: 'Username not found'});
+                        }else{
+                           res.send('Test');
+                        }
+                    }
+                })
+
+
+            }
+        }
+        
+    });
 
     return router;
 }

@@ -35,7 +35,7 @@ let usernameLenthChecker = (username) => {
     if(!username){
       return false;
     }else{
-      if(username.length<3 || username.length > 30){
+      if(username.length<3 || username.length>15 ){
         return false;
       }else{
         return true;
@@ -110,7 +110,8 @@ userSchema.pre('save', function(next){
         next();
     });
 });
-userSchema.methods.comparePassword = (password) => {
+
+userSchema.methods.comparePassword = function(password){
     return bcrypt.compareSync(password, this.password);
 };
 
