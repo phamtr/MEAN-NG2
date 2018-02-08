@@ -10,6 +10,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthService } from './auth.service';
 import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 @NgModule({
   declarations: [
@@ -18,13 +20,15 @@ import { LoginComponent } from './login/login.component';
     HomeComponent,
     DashboardComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    FlashMessagesModule.forRoot()
 
   ],
   providers: [AuthService],
