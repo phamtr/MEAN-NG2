@@ -7,14 +7,16 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthGuard } from './auth.guard';
+import { NotAuthGuard } from './notAuth.guard';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
-   { path: 'dashboard', component: DashboardComponent },
-   { path: 'register', component: RegisterComponent },
-   { path: 'login', component: LoginComponent },
+   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+   { path: 'register', component: RegisterComponent, canActivate: [NotAuthGuard] },
+   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard]  },
    
-   { path: 'profile', component: ProfileComponent },
+   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: '**', component: HomeComponent }
     
   ];
@@ -30,7 +32,7 @@ const appRoutes: Routes = [
           ),
           CommonModule
     ],
-    providers: [],
+    providers: [AuthGuard, NotAuthGuard],
     bootstrap: [],
     exports: [RouterModule]
   })

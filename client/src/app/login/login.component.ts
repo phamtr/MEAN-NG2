@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { AuthGuard } from '../auth.guard';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +14,10 @@ export class LoginComponent implements OnInit {
   message;
   messageClass;
   processing = false;
+  previousUrl;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService
-    , private router: Router) { this.createForm(); }
+    , private router: Router, private authGuard: AuthGuard) { this.createForm(); }
   createForm(){
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
@@ -49,12 +51,25 @@ export class LoginComponent implements OnInit {
         this.message = data.message;
         this.authService.storeUserData(data.token, data.user);
         setTimeout(() => {
-          this.router.navigate(['/dashboard']);
+        if(this.previousUrl){
+          this.router.navigate([this.previousUrl]);
+          }else{
+            this.router.navigate(['/dashboard']);
+          }
+
+
+          
         }, 2000);
       }
     })
   }
   ngOnInit() {
+    if(this.authGuard.redirectUrl){
+      this.messageClass = 'alert alert-danger';
+      this.message = 'You must be logged in to view that page.';
+      this.previousUrl = this.authGuard.redirectUrl;
+      this.authGuard.redirectUrl = undefined;
+    }
   }
 
 }
